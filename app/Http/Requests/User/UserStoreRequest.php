@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\User;
 
+use App\Enums\RoleEnum;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
@@ -32,6 +35,18 @@ class UserStoreRequest extends FormRequest
                 'string',
                 'min:6'
             ],
+
+            'role' => [
+                'required',
+                Rule::in([RoleEnum::AFFILIATE, RoleEnum::PRODUCER])
+            ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'role.in' => 'You can\'t create account with admin role!'
         ];
     }
 }

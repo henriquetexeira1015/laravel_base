@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\User;
 
+use App\Enums\RoleEnum;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -15,6 +17,12 @@ class UserUpdateRequest extends FormRequest
     {
         return
             [
+                'id' => [
+                    'integer',
+                    'exists:users,id',
+                    'nullable',
+                ],
+
                 'name' => [
                     'nullable',
                     'string',
@@ -25,6 +33,11 @@ class UserUpdateRequest extends FormRequest
                     'nullable',
                     'string',
                     'max:255',
+                ],
+
+                'role' => [
+                    'nullable',
+                    new Enum(RoleEnum::class),
                 ],
 
                 'password' => [

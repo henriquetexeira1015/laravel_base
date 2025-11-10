@@ -9,16 +9,19 @@ class JsonResponseHelper
     {
         if ($response['success'] === false) {
 
-            $response['status'] = $response['stauts'] ?? 400;
+            $response['status'] = $response['status'] ?? 400;
 
             return response()->json([
                 'message' => $response['message'],
             ], $response['status']);
         }
 
-        $response['status'] = $response['stauts'] ?? 200;
+        $response['status'] = $response['status'] ?? 200;
+
+        $response['data'] = $response['data'] ?? null;
 
         return response()->json([
+            'success' => $response['success'],
             'message' => $response['message'],
             'data' => $response['data'],
         ], $response['status']);
